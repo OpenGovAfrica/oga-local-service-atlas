@@ -33,9 +33,7 @@ class EvidenceSerializer(serializers.ModelSerializer):
 class VerificationSerializer(serializers.ModelSerializer):
     """Serializer for Verification."""
 
-    verified_by_name = serializers.CharField(
-        source="verified_by.username", read_only=True
-    )
+    verified_by_name = serializers.CharField(source="verified_by.username", read_only=True)
 
     class Meta:
         model = Verification
