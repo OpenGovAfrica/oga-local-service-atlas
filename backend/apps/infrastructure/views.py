@@ -33,9 +33,7 @@ class InfrastructureAssetViewSet(viewsets.ModelViewSet):
     Provides GeoJSON output for map rendering.
     """
 
-    queryset = InfrastructureAsset.objects.filter(is_active=True).select_related(
-        "geographic_area"
-    )
+    queryset = InfrastructureAsset.objects.filter(is_active=True).select_related("geographic_area")
     serializer_class = InfrastructureAssetSerializer
     filterset_class = InfrastructureAssetFilter
     search_fields = ["official_name", "local_name", "description"]

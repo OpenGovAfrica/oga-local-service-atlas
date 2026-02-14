@@ -7,15 +7,9 @@ from .models import InfrastructureAsset
 class InfrastructureAssetSerializer(serializers.ModelSerializer):
     """Standard serializer for InfrastructureAsset."""
 
-    geographic_area_name = serializers.CharField(
-        source="geographic_area.name", read_only=True
-    )
-    asset_type_display = serializers.CharField(
-        source="get_asset_type_display", read_only=True
-    )
-    condition_display = serializers.CharField(
-        source="get_condition_display", read_only=True
-    )
+    geographic_area_name = serializers.CharField(source="geographic_area.name", read_only=True)
+    asset_type_display = serializers.CharField(source="get_asset_type_display", read_only=True)
+    condition_display = serializers.CharField(source="get_condition_display", read_only=True)
 
     class Meta:
         model = InfrastructureAsset
@@ -46,15 +40,9 @@ class InfrastructureAssetSerializer(serializers.ModelSerializer):
 class InfrastructureAssetGeoSerializer(GeoFeatureModelSerializer):
     """GeoJSON serializer for map rendering."""
 
-    asset_type_display = serializers.CharField(
-        source="get_asset_type_display", read_only=True
-    )
-    condition_display = serializers.CharField(
-        source="get_condition_display", read_only=True
-    )
-    geographic_area_name = serializers.CharField(
-        source="geographic_area.name", read_only=True
-    )
+    asset_type_display = serializers.CharField(source="get_asset_type_display", read_only=True)
+    condition_display = serializers.CharField(source="get_condition_display", read_only=True)
+    geographic_area_name = serializers.CharField(source="geographic_area.name", read_only=True)
 
     class Meta:
         model = InfrastructureAsset
@@ -75,9 +63,7 @@ class InfrastructureAssetGeoSerializer(GeoFeatureModelSerializer):
 class InfrastructureAssetListSerializer(serializers.ModelSerializer):
     """Lightweight serializer for lists."""
 
-    geographic_area_name = serializers.CharField(
-        source="geographic_area.name", read_only=True
-    )
+    geographic_area_name = serializers.CharField(source="geographic_area.name", read_only=True)
 
     class Meta:
         model = InfrastructureAsset

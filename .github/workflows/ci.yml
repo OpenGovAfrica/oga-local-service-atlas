@@ -71,7 +71,9 @@ jobs:
       - name: Install system dependencies (GeoDjango)
         run: |
           sudo apt-get update
-          sudo apt-get install -y binutils libproj-dev gdal-bin libgdal-dev
+          sudo apt-get install -y binutils libproj-dev gdal-bin libgdal-dev libgeos-dev
+          echo "GDAL_LIBRARY_PATH=$(gdal-config --prefix)/lib/libgdal.so" >> $GITHUB_ENV
+          echo "GEOS_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/libgeos_c.so" >> $GITHUB_ENV
 
       - name: Install Python dependencies
         run: |
@@ -84,6 +86,8 @@ jobs:
           SECRET_KEY: test-secret-key
           DEBUG: "False"
           REDIS_URL: redis://localhost:6379/0
+          GDAL_LIBRARY_PATH: ${{ env.GDAL_LIBRARY_PATH }}
+          GEOS_LIBRARY_PATH: ${{ env.GEOS_LIBRARY_PATH }}
         run: |
           cd backend
           python manage.py migrate --no-input
@@ -94,6 +98,8 @@ jobs:
           SECRET_KEY: test-secret-key
           DEBUG: "False"
           REDIS_URL: redis://localhost:6379/0
+          GDAL_LIBRARY_PATH: ${{ env.GDAL_LIBRARY_PATH }}
+          GEOS_LIBRARY_PATH: ${{ env.GEOS_LIBRARY_PATH }}
         run: |
           cd backend
           pytest --cov=apps --cov-report=xml --cov-report=term-missing -v
