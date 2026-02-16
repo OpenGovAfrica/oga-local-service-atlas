@@ -75,3 +75,6 @@ yarn-error.log*
 .next/
 out/
 dist/
+ 
+# Local change log (ignored)
+CHANGES.md

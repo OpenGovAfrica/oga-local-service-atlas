@@ -1,8 +1,8 @@
-version: "3.9"
+# version: "3.9"  ...@ the attribute `version` is obsolete
 
 services:
   db:
-    image: postgis/postgis:16-3.4
+    image: imresamu/postgis:16-3.6.1-bookworm
     container_name: oga_atlas_db
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-oga_atlas}
@@ -13,7 +13,11 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-oga_user} -d ${POSTGRES_DB:-oga_atlas}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-oga_user} -d ${POSTGRES_DB:-oga_atlas}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5

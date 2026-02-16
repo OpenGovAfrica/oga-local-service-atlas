@@ -6,6 +6,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
@@ -18,9 +19,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    "SECRET_KEY", "django-insecure-dev-key-change-in-production"
-)
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key-change-in-production")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
@@ -87,12 +86,12 @@ DATABASE_URL = os.getenv(
     "postgis://oga_user:oga_password@localhost:5432/oga_atlas",
 )
 
-DATABASES = {
-    "default": dj_database_url.parse(
-        DATABASE_URL,
-        engine="django.contrib.gis.db.backends.postgis",
-    )
-}
+_engine = (
+    "django.contrib.gis.db.backends.postgis"
+    if DATABASE_URL.startswith("postgis://")
+    else "django.db.backends.sqlite3"
+)
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL, engine=_engine)}
 
 # Cache (Redis)
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -177,8 +176,6 @@ CORS_ALLOWED_ORIGINS = os.getenv(
 CORS_ALLOW_CREDENTIALS = True
 
 # JWT Settings
-from datetime import timedelta
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),

@@ -48,7 +48,9 @@ class ReportViewSet(viewsets.ModelViewSet):
     Includes state transition endpoints for workflow management.
     """
 
-    queryset = Report.objects.all().select_related("infrastructure_asset").prefetch_related("evidence")
+    queryset = (
+        Report.objects.all().select_related("infrastructure_asset").prefetch_related("evidence")
+    )
     serializer_class = ReportSerializer
     filterset_class = ReportFilter
     search_fields = ["description"]
@@ -129,14 +131,10 @@ class ReportViewSet(viewsets.ModelViewSet):
                 stats["by_state"][state] = count
 
         for status_val in queryset.values_list("reported_status", flat=True).distinct():
-            stats["by_status"][status_val] = queryset.filter(
-                reported_status=status_val
-            ).count()
+            stats["by_status"][status_val] = queryset.filter(reported_status=status_val).count()
 
         for type_val in queryset.values_list("infrastructure_type", flat=True).distinct():
-            stats["by_type"][type_val] = queryset.filter(
-                infrastructure_type=type_val
-            ).count()
+            stats["by_type"][type_val] = queryset.filter(infrastructure_type=type_val).count()
 
         return Response(stats)
 
