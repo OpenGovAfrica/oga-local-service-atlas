@@ -152,6 +152,16 @@ Clear ownership is required for all phases to ensure sustainability, accountabil
 
 ---
 
+## Development Setup & Technical Guidelines
+
+For detailed setup instructions, local development workflow, linting rules, and testing standards, please refer to our:
+
+[**docs/contributor.md**](https://github.com/OpenGovAfrica/oga-local-service-atlas/blob/main/docs/CONTRIBUTING.md)
+
+All contributors must follow both the governance model in this document and the technical standards present in the docs/contributor.md.
+
+---
+
 ### Getting Help
 
 If anything is unclear:
